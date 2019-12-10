@@ -117,7 +117,7 @@ class ReservationsListContainer extends Component {
     _.forEach(this.props.reservedHours, reservation => {
       hours[reservation.reservationDetails.hour - 1] = reservation;
     });
-    hours = _.filter(hours, h => h.reservationDetails == null);
+    // hours = _.filter(hours, h => h.reservationDetails == null);
     console.log(hours);
     return (
       <Container>
@@ -139,7 +139,7 @@ class ReservationsListContainer extends Component {
                     onPress={() => {
                       console.log(res.id);
                       this.props.getReservationDetails(res.id);
-                      this.props.navigation.navigate("ViewReservation");
+                      this.props.navigation.navigate("ViewOtherReservation");
                     }}
                   >
                     <Text>View</Text>
@@ -176,9 +176,13 @@ class ReservationsListContainer extends Component {
                         style={{ alignContent: "space-between", padding: 30 }}
                       >
                         <Text style={{ alignSelf: "center" }}>
-                          {res >= 12
-                            ? `${res - 12 == 0 ? 12 + " AM" : res - 12 + " PM"}`
-                            : `${res} AM`}
+                          {key + 1 >= 12
+                            ? `${
+                                key + 1 - 12 == 0
+                                  ? 12 + " AM"
+                                  : key + 1 - 12 + " PM"
+                              }`
+                            : `${key + 1} AM`}
                         </Text>
 
                         {/* <Text style={{ alignSelf: "center" }}>Price/Hour</Text>

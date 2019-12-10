@@ -8,7 +8,12 @@ import {
   FAILD_LOAD_PLAYGROUND_DETAILS,
   RATE_PLAYGROUND,
   RATE_PLAYGROUND_FAILED,
-  RATE_PLAYGROUND_SUCCESS
+  RATE_PLAYGROUND_SUCCESS,
+  FAILD_CANCEL_RESERVATION,
+  RESERVATION_CANCELED,
+  TRY_CANCEL_RESERVATION,
+  GET_RESERVATION_DETAILS,
+  FAILD_GET_RESERVATION_DETAILS
 } from "./actions";
 import {
   SelectedPlaygroundState,
@@ -73,6 +78,15 @@ export function selectedPlaygroundReducer(
         loading: false
       };
     }
+    case GET_RESERVATION_DETAILS: {
+      return {
+        ...state,
+        currentReservation: action.payload
+      };
+    }
+    case TRY_CANCEL_RESERVATION:
+    case RESERVATION_CANCELED:
+    case FAILD_CANCEL_RESERVATION:
     default:
       return state;
   }

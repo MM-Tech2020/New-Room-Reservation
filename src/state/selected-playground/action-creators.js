@@ -7,20 +7,25 @@ import {
   SELECT_RESERVATION_HOUR,
   RATE_PLAYGROUND,
   RATE_PLAYGROUND_FAILED,
-  RATE_PLAYGROUND_SUCCESS
-} from './actions';
-import { PlaygroundDto } from '../../proxy/dtos/classes';
+  RATE_PLAYGROUND_SUCCESS,
+  TRY_CANCEL_RESERVATION,
+  FAILD_CANCEL_RESERVATION,
+  RESERVATION_CANCELED,
+  FAILD_GET_RESERVATION_DETAILS,
+  GET_RESERVATION_DETAILS
+} from "./actions";
+import { PlaygroundDto } from "../../proxy/dtos/classes";
 
-import { HttpClient } from '../../services/http-client/http-client-service';
+import { HttpClient } from "../../services/http-client/http-client-service";
 
-import { State } from '../state';
+import { State } from "../state";
 
 export async function selectPlayground(playgroundId: number) {
   var response = await HttpClient.httpFetch(`/playground/${playgroundId}`, {
-    method: 'GET'
+    method: "GET"
   });
   if (response.status != 200) {
-    console.log('Fail to load Playground Details');
+    console.log("Fail to load Playground Details");
     return dispatch => {
       dispatch({
         type: FAILD_LOAD_PLAYGROUND_DETAILS
@@ -61,10 +66,10 @@ export async function confirmReservation(reservationModel: any) {
       `/playground/${state.selectedPlayground.current.id}/reserve`,
       {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          Accept: "application/json",
+          "Content-Type": "application/json"
         },
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(reservationModel)
       }
     );
@@ -95,10 +100,10 @@ export async function ratePlayground(rating) {
       }`,
       {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+          Accept: "application/json",
+          "Content-Type": "application/json"
         },
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(rating)
       }
     );
@@ -109,6 +114,46 @@ export async function ratePlayground(rating) {
     }
     dispatch({
       type: RATE_PLAYGROUND_SUCCESS
+    });
+  };
+}
+
+export async function getReservationDetails(reservationId: number) {
+  return async dispatch => {
+    var response = await HttpClient.httpFetch(
+      `/admin/reservations/${reservationId}`,
+      { method: "GET" }
+    );
+    if (response.status != 200) {
+      dispatch({
+        type: FAILD_GET_RESERVATION_DETAILS
+      });
+    }
+    var reservation = await response.json();
+    dispatch({
+      type: GET_RESERVATION_DETAILS,
+      payload: reservation
+    });
+  };
+}
+
+export async function cancelReservation(reservationId: number) {
+  return async dispatch => {
+    dispatch({
+      type: TRY_CANCEL_RESERVATION
+    });
+    var response = await HttpClient.httpFetch(
+      `/admin/reservations/${reservationId}`,
+      { method: "DELETE" }
+    );
+    if (response.status != 200) {
+      dispatch({
+        type: FAILD_CANCEL_RESERVATION
+      });
+    }
+
+    dispatch({
+      type: RESERVATION_CANCELED
     });
   };
 }

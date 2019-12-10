@@ -1,27 +1,14 @@
 import React, { Component } from "react";
 import { ShareContent, Share } from "react-native";
 import {
-  View,
-  Footer,
-  FooterTab,
   Container,
-  Header,
   Button,
   Icon,
-  Body,
-  Right,
-  Left,
-  Title,
-  SubTitle,
   Text,
   Label,
   Content,
-  List,
-  ListItem,
   Card,
   CardItem,
-  Thumbnail,
-  Image,
   Spinner,
   Form,
   Input,
@@ -30,7 +17,12 @@ import {
 
 import { connect } from "react-redux";
 import { Dispatch, bindActionCreators } from "redux";
-import { State, reservePlayground, ratePlayground } from "../../state";
+import {
+  State,
+  reservePlayground,
+  ratePlayground,
+  cancelReservation
+} from "../../state";
 import { PlaygroundDto, ReservationDto } from "../../proxy/dtos/classes";
 import * as _ from "lodash";
 import { FooterComponent } from "../components";
@@ -43,7 +35,7 @@ class ViewReservationContainer extends Component {
     };
   }
   static mapDispatchToProps(dispatch: Dispatch) {
-    return bindActionCreators({ ratePlayground }, dispatch);
+    return bindActionCreators({ ratePlayground, cancelReservation }, dispatch);
   }
 
   constructor() {
@@ -56,7 +48,8 @@ class ViewReservationContainer extends Component {
   props: {
     reservation: ReservationDto,
     loading: boolean,
-    ratePlayground: (rate: any) => void
+    ratePlayground: (rate: any) => void,
+    cancelReservation: (id: int) => void
   };
 
   rate(value) {
@@ -138,22 +131,39 @@ class ViewReservationContainer extends Component {
           {loadingPanel}
         </Form>
       ) : (
-        <Button
-          full
-          iconRight
-          success
-          rounded
-          onPress={() => {
-            Share.share({
-              title: "Reservation Number",
-              message: `Reservation Number: ${this.props.reservation.id}`,
-              url: " "
-            });
-          }}
-        >
-          <Icon name="share" />
-          <Text>Share</Text>
-        </Button>
+        <>
+          <Button
+            full
+            iconRight
+            success
+            rounded
+            style={{ margin: 2 }}
+            onPress={() => {
+              this.props.cancelReservation(this.props.reservation.id);
+              this.props.navigation.navigate("HomeScreen");
+            }}
+          >
+            <Icon name="trash" />
+            <Text>Cancel</Text>
+          </Button>
+          <Button
+            full
+            iconRight
+            success
+            rounded
+            style={{ margin: 2 }}
+            onPress={() => {
+              Share.share({
+                title: "Reservation Number",
+                message: `Reservation Number: ${this.props.reservation.id}`,
+                url: " "
+              });
+            }}
+          >
+            <Icon name="share" />
+            <Text>Share</Text>
+          </Button>
+        </>
       );
     return (
       <Container>

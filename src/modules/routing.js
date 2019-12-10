@@ -9,7 +9,8 @@ import {
   RegisterScreen,
   ReservationsList,
   confirmReservationScreen,
-  PayReservationScreen
+  PayReservationScreen,
+  ViewOtherReservationScreen
 } from "./screens";
 
 export const Navigator = createStackNavigator(
@@ -22,7 +23,8 @@ export const Navigator = createStackNavigator(
     LoginScreen: LoginScreen,
     RegisterScreen: RegisterScreen,
     ConfirmReservation: confirmReservationScreen,
-    PayReservation: PayReservationScreen
+    PayReservation: PayReservationScreen,
+    ViewOtherReservation: ViewOtherReservationScreen
   },
   {
     initialRouteName: "LoginScreen"
