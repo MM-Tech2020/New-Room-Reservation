@@ -1,4 +1,4 @@
-import { PlaygroundDto } from '../../proxy/dtos/classes';
+import { PlaygroundDto } from "../../proxy/dtos/classes";
 import {
   LOAD_PLAYGROUNDS,
   FAILD_LOAD_PLAYGROUNDS,
@@ -7,13 +7,13 @@ import {
   GET_MYRESERVATIONS,
   FAILD_LOAD_MYRESERVATIONS,
   SET_CURRENT_RESERVATIONID
-} from './actions';
+} from "./actions";
 
-import { HttpClient } from '../../services/http-client/http-client-service';
-import { State } from '..';
+import { HttpClient } from "../../services/http-client/http-client-service";
+import { State } from "../state";
 
 export async function loadPlaygrounds() {
-  var response = await HttpClient.httpFetch('/playground', { method: 'GET' });
+  var response = await HttpClient.httpFetch("/playground", { method: "GET" });
   if (response.status != 200) {
     return dispatch => {
       dispatch({
@@ -50,7 +50,7 @@ export async function getMyReservations() {
     var response = await HttpClient.httpFetch(
       `/user/reservations/${state.authorization.token.userId}`,
       {
-        method: 'GET'
+        method: "GET"
       }
     );
 
