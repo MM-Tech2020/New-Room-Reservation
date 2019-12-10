@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "El Meeting",
+    "description": "This project is really great.",
+    "slug": "el-meeting",
+    "privacy": "public",
+    "sdkVersion": "35.0.0",
+    "platforms": ["ios", "android"],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "cover"
+    },
+    "ios": {
+      "supportsTablet": true
+    }
+  }
+}
