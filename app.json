@@ -1,11 +1,14 @@
 {
   "expo": {
-    "name": "El Meeting",
+    "name": "Meetings",
     "description": "This project is really great.",
-    "slug": "el-meeting",
+    "slug": "meetings",
     "privacy": "public",
     "sdkVersion": "35.0.0",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
